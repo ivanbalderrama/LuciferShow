@@ -6,7 +6,8 @@ namespace LuciferShow
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            //Instantiate the welcome screen
+            Welcome welcomeScreen = new Welcome();
         }
     }
 }
