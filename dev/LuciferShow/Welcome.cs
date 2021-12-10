@@ -16,7 +16,7 @@ namespace LuciferShow
         private void Display()
         {
             //Design lucifer header
-            UI.WelcomeScreen();
+            UI.Header("Lucifer");
 
             //Instantiate new api 
             APIConnect apiMain = new APIConnect();

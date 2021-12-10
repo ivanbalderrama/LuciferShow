@@ -1,18 +1,47 @@
 ﻿using System;
+using System.Collections.Generic;
 namespace LuciferShow
 {
     public class Application
     {
+        private List<Season> _seasons = new List<Season>();
+        private List<Episode> _episodes = new List<Episode>();
         public Application()
         {
             //instantiate api
             APIConnect api = new APIConnect();
 
-            //Create a string var to hold the URL.
-            string url = "https://omdbapi.com/?i=tt4052886&apikey=5c08013f";
+            _seasons = api.GetSeasons();
 
-            //Call api Connect method.
-            api.Connect(url);
+            foreach(Season season in _seasons)
+            {
+                Console.WriteLine(season.Title);
+            }
+
+            //Create a string var to hold the URL.
+
+            //Send the url to get the api connected.
+            Console.ReadLine();
+
+
+
+            
+
+            
+
+        }
+
+        
+        private void DisplayMenu()
+        {
+            //Clear Console
+            Console.Clear();
+            //Show header lucifer
+            UI.Header("Lucifer");
+
+
+            
+
         }
     }
 }

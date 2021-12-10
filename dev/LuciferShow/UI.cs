@@ -3,12 +3,12 @@ namespace LuciferShow
 {
     public class UI
     {
-        public static void WelcomeScreen()
+        public static void Header(string title)
         {
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("================================================");
             Console.ForegroundColor = ConsoleColor.Red;
-            Console.WriteLine("LUCIFER");
+            Console.WriteLine($"{title.ToUpper()}");
             Console.ForegroundColor = ConsoleColor.White;
             Console.WriteLine("================================================\r\n");
             Console.ForegroundColor = ConsoleColor.White;
