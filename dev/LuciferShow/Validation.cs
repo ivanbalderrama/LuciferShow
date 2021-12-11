@@ -1,15 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 namespace LuciferShow
 {
     public class Validation
     {
-        public static int MenuValidation(string input)
+        public static int MenuValidation(string input, List<Season> seasons)
         {
             int userInput;
             while(!int.TryParse(input, out userInput) || string.IsNullOrWhiteSpace(input) || userInput < 0 || userInput > 6)
             {
                 Console.WriteLine("That is an invalid option.");
-                Console.WriteLine("Using numbers 1-6 please select which season you'd like to learn more about.\r\n");
+                Console.Write("Please select which season you would like more info on: ");
                 input = Console.ReadLine();
             }
             return userInput;

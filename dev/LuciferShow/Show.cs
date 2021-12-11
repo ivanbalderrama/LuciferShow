@@ -9,6 +9,7 @@ namespace LuciferShow
         private string _about;
         private double _rating;
 
+
         //Properties
         public string Title { get { return _title; } }
         public string Genre { get { return _genre; } }

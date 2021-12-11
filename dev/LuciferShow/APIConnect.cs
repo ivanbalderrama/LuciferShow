@@ -80,6 +80,8 @@ namespace LuciferShow
             //Return jos
             return jos;
         }
+
+        //Function that turns dynamic jos into a list of seasons
         public List<Season> GetSeasons()
         {
             //List of all jos
@@ -95,9 +97,46 @@ namespace LuciferShow
                 Season season = new Season("Season: ", seasonNum);
 
                 seasons.Add(season);
+
+                
+                
             }
 
+            
+
             return seasons;
+        }
+
+
+        
+
+        public List<Episode> GetEpisodes(int seasonSelected)
+        {
+            
+            List<Episode> episodes = new List<Episode>();
+
+            dynamic jo = ConnectSeasons();
+
+
+            JArray items = (JArray)jo["Episodes"];
+            int length = items.Count;
+
+            Console.WriteLine(length);
+            
+
+            for(int i = 0; i < length; i++)
+            {
+                //Store variables depending on users selection of season
+                string title = jo[seasonSelected].Episodes[i].Title;
+                string Id = jo[seasonSelected].Episodes[i].imdbID;
+                int epiNum = jo[seasonSelected].Episodes[i].Episode;
+
+                Episode episode = new Episode(title, epiNum, Id);
+
+                episodes.Add(episode);
+            }
+
+             return episodes;
         }
 
 

@@ -12,6 +12,7 @@ namespace LuciferShow
         //Properties
         public int SeasonNumber { get { return _seasonNum; } }
         public string Title { get { return _title; } }
+        public List<Episode> Episodes { get { return _episodes; } }
 
 
         public Season(string title, int seasonNum)

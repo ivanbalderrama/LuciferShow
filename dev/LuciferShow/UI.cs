@@ -33,5 +33,13 @@ namespace LuciferShow
             Console.WriteLine("Press any key to continue...");
             Console.ReadKey();
         }
+        public static void FooterExit()
+        {
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("================================================");
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("Press any key to continue...");
+            Console.ReadKey();
+        }
     }
 }
