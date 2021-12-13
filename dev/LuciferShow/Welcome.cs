@@ -5,6 +5,7 @@ namespace LuciferShow
 {
     public class Welcome
     {
+
         public Welcome()
         {
             //Function to display the welcome screen w/ summary about the show

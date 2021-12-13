@@ -9,6 +9,7 @@ namespace LuciferShow
 
         public string Title { get { return _title; } }
         public string ID { get { return _imdbID; } }
+        public int EpisodeNum { get { return _episodeNum; } }
 
         public Episode(string title, int episodeNum, string id)
         {

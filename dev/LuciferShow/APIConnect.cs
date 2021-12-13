@@ -7,6 +7,8 @@ namespace LuciferShow
 {
     public class APIConnect
     {
+        private List<Episode> _episodes = new List<Episode>();
+        
         private string[] _seasUrls = new string[]
         {
             //S1
@@ -37,6 +39,7 @@ namespace LuciferShow
 
                 return jo;
             }
+            
         }
 
         //Method that has jo passed in and assigns variable to the show class.
@@ -57,8 +60,8 @@ namespace LuciferShow
             //return the show
             return lucifer;
         }
-        //Function that takes in json object and returns total seasons
-        private List<dynamic> ConnectSeasons()
+        
+        private dynamic ConnectSeasons()
         {
             //Create a list to store the objects
             List<dynamic> jos = new List<dynamic>();
@@ -85,60 +88,49 @@ namespace LuciferShow
         public List<Season> GetSeasons()
         {
             //List of all jos
-            List<dynamic> jos = ConnectSeasons();
+            dynamic jsonSeasons = ConnectSeasons();
 
             //store seasons
             List<Season> seasons = new List<Season>();
 
-            foreach(dynamic jo in jos)
+            //Getting each json object from the list of json objects (jos)
+            foreach(dynamic s in jsonSeasons)
             {
-                int seasonNum = jo.Season;
-
+                //Get Season Number
+                int seasonNum = s.Season;
+                //title, episdeNum, ID
                 Season season = new Season("Season: ", seasonNum);
-
+                //Add season to a list of seasons
                 seasons.Add(season);
-
-                
                 
             }
 
-            
 
             return seasons;
         }
 
-
-        
-
-        public List<Episode> GetEpisodes(int seasonSelected)
+        public List<Episode> GetEpisodes(int userInput)
         {
-            
             List<Episode> episodes = new List<Episode>();
-
             dynamic jo = ConnectSeasons();
 
-
-            JArray items = (JArray)jo["Episodes"];
-            int length = items.Count;
-
-            Console.WriteLine(length);
-            
-
-            for(int i = 0; i < length; i++)
+            for (int i = 0; i < jo[userInput].Episodes.Count; i++)
             {
-                //Store variables depending on users selection of season
-                string title = jo[seasonSelected].Episodes[i].Title;
-                string Id = jo[seasonSelected].Episodes[i].imdbID;
-                int epiNum = jo[seasonSelected].Episodes[i].Episode;
+                //stores variables depending on users selection of season
+                string title = jo[userInput].Episodes[i].Title;
+                int epiNum = jo[userInput].Episodes[i].Episode;
+                string imdbID = jo[userInput].Episodes[i].imdbID;
 
-                Episode episode = new Episode(title, epiNum, Id);
-
+                //Instantiate a new object
+                Episode episode = new Episode(title, epiNum, imdbID);
+                //Add episodes to episode list
                 episodes.Add(episode);
             }
-
-             return episodes;
+            return episodes;
         }
 
+
+        
 
     }
 }

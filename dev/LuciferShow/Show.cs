@@ -24,5 +24,6 @@ namespace LuciferShow
             _about = about;
             _rating = rating;
         }
+
     }
 }
