@@ -1,6 +1,8 @@
 ﻿using System;
 namespace LuciferShow
 {
+
+    //This class is used only to make the console more organized
     public class UI
     {
         public static void Header(string title)

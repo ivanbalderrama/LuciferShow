@@ -26,7 +26,7 @@ namespace LuciferShow
         public APIConnect()
         {
         }
-
+        
         public dynamic Connect(string url)
         {
             using (WebClient wc = new WebClient())
@@ -104,33 +104,54 @@ namespace LuciferShow
                 seasons.Add(season);
                 
             }
-
-
             return seasons;
         }
 
         public List<Episode> GetEpisodes(int userInput)
         {
+            //Make a list of episodes to store
             List<Episode> episodes = new List<Episode>();
+            
             dynamic jo = ConnectSeasons();
 
-            for (int i = 0; i < jo[userInput].Episodes.Count; i++)
+            if (userInput >= 0)
             {
-                //stores variables depending on users selection of season
-                string title = jo[userInput].Episodes[i].Title;
-                int epiNum = jo[userInput].Episodes[i].Episode;
-                string imdbID = jo[userInput].Episodes[i].imdbID;
+                JArray items = (JArray)jo[userInput].Episodes;
 
-                //Instantiate a new object
-                Episode episode = new Episode(title, epiNum, imdbID);
-                //Add episodes to episode list
-                episodes.Add(episode);
+                int length = items.Count;
+
+
+                for (int i = 0; i < length; i++)
+                {
+                    //stores variables depending on users selection of season
+                    string title = jo[userInput].Episodes[i].Title;
+                    int epiNum = jo[userInput].Episodes[i].Episode;
+                    string imdbID = jo[userInput].Episodes[i].imdbID;
+
+                    //Instantiate a new object
+                    Episode episode = new Episode(title, epiNum, imdbID);
+                    //Add episodes to episode list
+                    episodes.Add(episode);
+                }
             }
+            
             return episodes;
         }
 
+        public void EpisodeInfo(string userInpID)
+        {
+            string add = userInpID + "&apikey=5c08013f";
+            string url = "http://www.omdbapi.com/?i=" + add;
 
-        
+            dynamic jo = Connect(url);
+
+            Console.WriteLine($"\r\nAbout: {jo.Plot}\r\n");
+            Console.WriteLine($"\r\nActors: {jo.Actors}");
+
+        }
+
+
+
 
     }
 }

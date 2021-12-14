@@ -26,7 +26,7 @@ namespace LuciferShow
 
             bool menuGo = true;
             //continue menu till user decides to exit
-            while(menuGo)
+            while (menuGo)
             {
                 //Display the menu
                 DisplayMenu(numOfSeasons);
@@ -37,102 +37,103 @@ namespace LuciferShow
                 //Request for users selection
                 Console.Write("Please select which season you would like more info on: ");
                 //Ask user for response (Validation)
-                int seasonSelection = Validation.MenuValidation(Console.ReadLine(), _seasons);
-
+                int seasonSelection = Validation.MenuValidation(Console.ReadLine());
+                
                 //Bool changes depending on menu choice of user
                 menuGo = UserSelection(seasonSelection);
+                if(seasonSelection != 0)
+                { 
+                //Get the episodes depending on users selection and store them to the list
+                _episodes = api.GetEpisodes(seasonSelection - 1);
+
+                bool epiMenuGo = true;
+                    while (epiMenuGo)
+                    {
+                        Console.Clear();
+                        UI.Header($"Season: {seasonSelection}");
+                        Menu epiMenu = new Menu();
+                        //Pass in the list of episodes
+                        epiMenu.EpiInIt(_episodes);
+                        //Display the menu
+                        epiMenu.EpiDisplay();
+
+                        //Get users input on which episode they want info from
+                        string episodeMess = "Please select the episode you'd like to see information on: ";
+                        Console.Write(episodeMess);
+                        //int variable to get users input to select the episode using validation.
+                        int userEpis = Validation.EpisodeMenuOpt(Console.ReadLine(), episodeMess, _episodes);
+                        //If the user selects anything other than '0' (Exit) then run this code.
+                        if (userEpis != 0)
+                        {
+                            
+                            //Clear the console
+                            Console.Clear();
+                            //Show the header depending users selection
+                            UI.Header(_episodes[userEpis - 1].Title);
+                            //Display the title of the episode
+                            Console.WriteLine($"Episode Title: {_episodes[userEpis - 1].Title}");
+                            //Display the number of the episode
+                            Console.WriteLine($"Episode Number: {_episodes[userEpis - 1].EpisodeNum}");
+                            //Get other information of the episode to display.
+                            api.EpisodeInfo(_episodes[userEpis - 1].ID);
+                            //User interface (organization purposes)
+                            UI.Footer();
 
 
-                _episodes = api.GetEpisodes(seasonSelection);
+                        }
 
-                Menu epiMenu = new Menu();
-
-
-                epiMenu.EpiInIt(_episodes);
-                epiMenu.EpiDisplay();
-
-                //Get users input on which episode they want info from
-                string episodeMess = "Please select the episode you'd like to see information on: ";
-                Console.Write(episodeMess);
-                int userEpis = Validation.EpisodeMenuOpt(Console.ReadLine(), episodeMess, _episodes);
-
-                if(userEpis != 0)
-                {
-                    UI.Header(_episodes[userEpis - 1].Title);
-                    Console.WriteLine($"{_episodes[userEpis - 1].Title}");
-                    Console.WriteLine($"{_episodes[userEpis-1].EpisodeNum}");
-                    UI.Footer();
+                        else
+                        {
+                            epiMenuGo = false;
+                        }
+                    }
                 }
-
-
-
             }
-
-
         }
 
-        
+        //Method to display the menu of seasons
         private void DisplayMenu(int numOfSeasons)
         {
+            //Clear the console.
             Console.Clear();
             //Show header lucifer
             UI.Header("Lucifer");
             //Instantiate menu
             Menu menu = new Menu();
 
-            //Send in the season menu items
+            //Loop as many times as there are seasons
             for (int i = 0; i < numOfSeasons; i++)
             {
-                Console.WriteLine($"{i + 1}) Season: {i + 1}");
+                //Display the number they can input and the season number
+                Console.WriteLine($"({i + 1}) Season: {i + 1}\r\n");
             }
-
-            //Display the season items
-
-
-
+            //Display the exit option
+            Console.WriteLine("(0) Exit");
         }
 
-        private void DisplayEpisodes()
-        {
-            //Clear Console
-            Console.Clear();
-
-            //Show header as "EPISODES"
-            UI.Header("Episodes");
-
-            //Instantiate a new menu for episodes
-            Menu epiMenu = new Menu();
-
-            //Send in the episode menu items
-            epiMenu.EpiInIt(_episodes);
-
-            //Display the season items
-            epiMenu.EpiDisplay();
-
-
-        }
+        
+        /*Method is used to get the users selection and if the user chooses to
+         * exit then it will return a boolean of false so that the menu stops
+         * looping and the program exits
+         */
         private bool UserSelection(int userInput)
         {
+            //Just a seperator for organization purposes
             UI.Seperator();
-
+            //Menu of bool = true as long as user doesn't choose to exit
             bool menuGo = true;
-
+            //If the user selects 0 then return false and display the Exit();
             if(userInput == 0)
             {
                 menuGo = false;
                 Exit();
                 
             }
-            else
-            {
-                //Display the user header to be based on users selection
-                UI.Header($"Season: {userInput}");
-
-                
-            }
+            //Return bool
             return menuGo;
             
         }
+        //This method is only used to thank the user for using the program
         private void Exit()
         {
             //Clear console
@@ -143,10 +144,9 @@ namespace LuciferShow
 
             //thank the user
             Console.WriteLine("Thank you for using the program!");
-
+            
             //Display the footer
             UI.FooterExit();
-
         }
     }
 }

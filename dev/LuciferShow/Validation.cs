@@ -4,10 +4,10 @@ namespace LuciferShow
 {
     public class Validation
     {
-        public static int MenuValidation(string input, List<Season> seasons)
+        public static int MenuValidation(string input)
         {
             int userInput;
-            while(!int.TryParse(input, out userInput) || string.IsNullOrWhiteSpace(input) || userInput <=0 || userInput > 6)
+            while(!int.TryParse(input, out userInput) || string.IsNullOrWhiteSpace(input) || userInput < 0 || userInput > 6)
             {
                 Console.WriteLine("That is an invalid option.");
                 Console.Write("Please select which season you would like more info on: ");

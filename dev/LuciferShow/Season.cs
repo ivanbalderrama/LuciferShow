@@ -27,9 +27,5 @@ namespace LuciferShow
             _title = title;
         }
 
-        private void GetEpisodes()
-        {
-
-        }
     }
 }
